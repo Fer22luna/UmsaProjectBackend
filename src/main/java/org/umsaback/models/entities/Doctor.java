@@ -18,11 +18,10 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "doctores")
-public class Doctor {
+public class Doctor extends Persona{
 	
 	@Id
 	@GeneratedValue(generator = "uuid")
 	private String id;
 	private String especialidad;
-	
 }
