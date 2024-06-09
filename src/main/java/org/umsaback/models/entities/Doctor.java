@@ -1,23 +1,22 @@
 package org.umsaback.models.entities;
 
-
+import java.time.LocalDate;
 
 import org.hibernate.annotations.UuidGenerator;
 import org.umsaback.enums.Especialidad;
 import org.umsaback.models.utils.Persona;
 
+import io.smallrye.common.constraint.NotNull;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 
 @Entity
@@ -29,7 +28,13 @@ public class Doctor extends Persona{
 	private String id;
 	
 	
-	@Column
+	@Column @NotNull
 	private Especialidad especialidad;
 	
+	public Doctor(String nombre, String apellido, String dni, String domicilio, LocalDate fechaNacimiento, String celular, Especialidad especialidad) {
+		super(nombre, apellido, dni, domicilio, fechaNacimiento,celular);
+		this.especialidad=especialidad;
+	}
 }
+
+

@@ -1,6 +1,7 @@
 package org.umsaback.repositories;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.umsaback.models.entities.Doctor;
 
@@ -10,8 +11,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public class DoctorRepository implements PanacheRepository<Doctor>{
 	
-	public List<Doctor> buscarPorNombre(String nombre){
-		return list("nombre",nombre);
+	public List<Doctor> findByName(String nombre) {
+        return list("SELECT d.nombre, d.apellido, d.dni, d.especialidad FROM Doctor d WHERE d.nombre = ?1", nombre);
 	}
-	
 }
