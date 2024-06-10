@@ -1,26 +1,26 @@
 package org.umsaback.resources;
 
-//import java.util.List;
 
 import org.umsaback.models.dtos.DoctorDTO;
-//import org.umsaback.models.dtos.PacienteDTO;
 import org.umsaback.models.entities.Doctor;
-//import org.umsaback.models.entities.Paciente;
-//import org.umsaback.repositories.DoctorRepository;
+
+import org.umsaback.enums.Especialidad;
+import org.umsaback.models.entities.Doctor;
 import org.umsaback.services.DoctorService;
 
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+
 import jakarta.ws.rs.Consumes;
-//import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
-//import jakarta.ws.rs.PathParam;
-//import jakarta.ws.rs.Produces;
-//import jakarta.ws.rs.core.MediaType;
-//import lombok.experimental.var;
+import jakarta.ws.rs.DELETE;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+
 import jakarta.ws.rs.core.Response;
 
 @Path("/doctor")
@@ -29,7 +29,7 @@ import jakarta.ws.rs.core.Response;
 public class DoctorResource {
 	
 	@Inject
-    DoctorService doctorService;
+  DoctorService doctorService;
 //	
 //	@GET
 //	public List<Doctor> index() {	// Muestro todos los Doctores
@@ -41,6 +41,7 @@ public class DoctorResource {
 //		repository.persist(insertedDoctor);
 //		return insertedDoctor;
 //	}
+
 	
 
 	@POST
@@ -69,6 +70,29 @@ public class DoctorResource {
 //	@Produces(MediaType.APPLICATION_JSON)
 //	public List<Doctor> getDoctorbyNombre(@PathParam("nombre") String nombre) {
 //		return repository.buscarPorNombre(nombre);
+//	}
+  
+//	public Response mostrarDoctor(Doctor nuevoDoctor) {
+//		return doctorService.crearDoctor(nuevoDoctor);
+//	}
+	
+	@GET
+	@Path("nombre/{nombre}")
+	public Response getByName(@PathParam("nombre") String nombre) {
+		return doctorService.getByName(nombre);
+	}
+
+	
+	@GET
+	@Path("especialidad/{especialidad}")
+	public Response getByEspecialidad(@PathParam("especialidad") Especialidad especialidad) {
+		return doctorService.getByEspecialidad(especialidad);
+	}
+	
+//	@DELETE
+//	@Path("{dni}")
+//	public Response deleteDoctor(@PathParam("dni") String dni) {
+//		return doctorService.
 //	}
 	
 
