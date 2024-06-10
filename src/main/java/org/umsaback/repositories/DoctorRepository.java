@@ -14,4 +14,8 @@ public class DoctorRepository implements PanacheRepository<Doctor>{
 		return list("nombre",nombre);
 	}
 	
+	public Doctor findByUUID(String id) {
+		return find("id",id).firstResult();
+	}
+	
 }

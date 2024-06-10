@@ -6,6 +6,9 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+
+import java.util.List;
+
 import org.umsaback.models.dtos.PacienteDTO;
 import org.umsaback.models.entities.Paciente;
 import org.umsaback.services.PacienteService;
@@ -22,27 +25,28 @@ public class PacienteResource {
 	@Inject
 	PacienteService pacienteService;
 	
-	
+	// Traer a todos los Pacientes
 	@GET
-	@Path("all")
+	@Path("todos")
 	@Transactional
-	public String getPaciente() {
-		return "aca retornan los pacientes";
-		//List<Paciente> pacientes = pacienteRepository.listAll();
-		//return Response.ok(pacientes).build(); 
+	public Response getAllPaciente() {
 		
-	}
+		List<Paciente> listaPacientes= pacienteService.listAll();
+		return Response.status(Response.Status.OK).entity(listaPacientes).build();
+	}		
 	
+	// Traer pacientes por CUIT
 	@GET
 	@Path("/{cuit}")
 	@Transactional
-	public String getPacienteByCUIT(@PathParam("cuit") String cuit ) {
+	public Response getPacienteByCUIT(@PathParam("cuit") String cuit ) {
 		
-		//
-		return "regresar paciente by ID";
+		Paciente paciente = pacienteService.findByCuit(cuit);
+		return Response.status(Response.Status.OK).entity(paciente).build();
+		
 	}
 	
-
+	// crear paciente
 	@POST
 	@Path("crear")
 	@Transactional
@@ -51,6 +55,16 @@ public class PacienteResource {
         Paciente createPaciente = pacienteService.createPaciente(pacienteDTO);
         return Response.status(Response.Status.CREATED).entity(createPaciente).build();
     }
+	
+	
+//	@Update
+//	@Path("actualizar/{cuit}")
+//	@Transactional
+//	public Response updatePaciente(PacienteDTO pacienteDTO) {
+//		
+//	}
+
+	
 	
 	
 	

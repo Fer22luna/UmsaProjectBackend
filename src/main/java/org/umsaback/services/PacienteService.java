@@ -1,6 +1,5 @@
 package org.umsaback.services;
 import java.util.List;
-import java.util.Optional;
 
 import org.umsaback.models.dtos.PacienteDTO;
 import org.umsaback.models.entities.Paciente;
@@ -17,11 +16,11 @@ public class PacienteService {
 	 PacienteRepository pacienteRepository;
 	 
 	 
-	 public List<Paciente> listAll(String Id){
+	 public List<Paciente> listAll(){
 			return pacienteRepository.listAll();
 		}
 	 
-	 public Optional<Paciente> findByCuit(String cuit){
+	 public Paciente findByCuit(String cuit){
 		 
 			return pacienteRepository.findByCuit(cuit);
 		}	 
@@ -29,8 +28,12 @@ public class PacienteService {
 	 
 	 public Paciente createPaciente(PacienteDTO pacienteDTO) {
 
-		 	Paciente nuevoPaciente = new Paciente(pacienteDTO.getObraSocial(),pacienteDTO.getCuit());
-		 	
+		 	Paciente nuevoPaciente = new Paciente(
+		 			pacienteDTO.getNombre(), pacienteDTO.getApellido(), pacienteDTO.getDni(),
+		 			pacienteDTO.getDomicilio(),pacienteDTO.getFechaNacimiento(),pacienteDTO.getCelular(),
+		 			pacienteDTO.getObraSocial(),pacienteDTO.getCuit()
+		 			);
+		
 		 	pacienteRepository.persist(nuevoPaciente);
 		
 	        return pacienteRepository.findById(nuevoPaciente.getId());
