@@ -1,15 +1,22 @@
 package org.umsaback.services;
 
+
+
+import org.umsaback.models.dtos.DoctorDTO;
+
 import java.util.List;
 
 import org.umsaback.enums.Especialidad;
+
 import org.umsaback.models.entities.Doctor;
 import org.umsaback.repositories.DoctorRepository;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.core.Response;
+
 
 @ApplicationScoped
 public class DoctorService {
@@ -45,4 +52,19 @@ public class DoctorService {
 	
 	
 
+	
+	@Inject
+	DoctorRepository doctorRepository;
+	
+	
+	 public Doctor createDoctor(DoctorDTO doctorDTO) {
+		 
+
+		 	Doctor nuevoDoctor = new Doctor(doctorDTO.getEspecialidad());
+		 	
+		 	doctorRepository.persist(nuevoDoctor);
+		
+	        return doctorRepository.findByUUID(nuevoDoctor.getId());
+	    }
+	
 }

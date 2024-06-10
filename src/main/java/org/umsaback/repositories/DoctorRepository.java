@@ -16,9 +16,16 @@ public class DoctorRepository implements PanacheRepository<Doctor>{
         return list("SELECT d.nombre, d.apellido, d.dni, d.especialidad FROM Doctor d WHERE d.nombre = ?1", nombre);
 	}
 	
+
+	public Doctor findByUUID(String id) {
+		return find("id",id).firstResult();
+	}
+	
+
 	public List<Doctor> findByEspecialidad(Especialidad especialidad){
 		return list("SELECT d.nombre, d.apellido, d.dni, d.especialidad FROM Doctor d WHERE d.especialidad = ?1", especialidad);
 	}
 	
 	//public 
+
 }

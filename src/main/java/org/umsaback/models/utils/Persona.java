@@ -12,13 +12,9 @@ import lombok.Setter;
 import lombok.ToString;
 
 @MappedSuperclass
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
 @ToString
-
-
 public class Persona {
 	
 	@Column @NotNull
@@ -29,9 +25,24 @@ public class Persona {
 	private String dni;
 	@Column 
 	private String domicilio;
-	@Column
+	@Column 
 	private LocalDate fechaNacimiento;
 	@Column
 	private String celular;
+	
+	public Persona() {}
+		
+	public Persona(String nombre, String apellido, String dni, String domicilio, LocalDate fechaNacimiento,
+			String celular) {
+		super();
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.dni = dni;
+		this.domicilio = domicilio;
+		this.fechaNacimiento = fechaNacimiento;
+		this.celular = celular;
+	}
 
+	
+	
 }
