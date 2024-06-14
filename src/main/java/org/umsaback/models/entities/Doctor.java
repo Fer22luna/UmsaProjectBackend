@@ -72,10 +72,9 @@ public class Doctor {
 		this.turnos = turnos;
 	}
 	
-	
-	
-	public Doctor(String nombre, String apellido, String dni, String domicilio, LocalDate fechaNacimiento, String celular, Especialidad especialidad) {
-		super(nombre, apellido, dni, domicilio, fechaNacimiento,celular);
+	public Doctor(String nombre, String apellido, String dni, String domicilio, LocalDate fechaNacimiento, String celular, 
+			Especialidad especialidad) {
+		super();
 		this.especialidad=especialidad;
 	}
 
