@@ -4,6 +4,8 @@ package org.umsaback.resources;
 import org.umsaback.models.dtos.DoctorDTO;
 import org.umsaback.models.entities.Doctor;
 
+import java.util.List;
+
 import org.umsaback.enums.Especialidad;
 import org.umsaback.models.entities.Doctor;
 import org.umsaback.services.DoctorService;
@@ -29,23 +31,21 @@ import jakarta.ws.rs.core.Response;
 public class DoctorResource {
 	
 	@Inject
-  DoctorService doctorService;
-//	
-//	@GET
-//	public List<Doctor> index() {	// Muestro todos los Doctores
-//		return repository.listAll();
-//	}
+	DoctorService doctorService;
 	
-//	@POST
-//	public Doctor insert(DoctorDTO doctorDTO) {
-//		repository.persist(insertedDoctor);
-//		return insertedDoctor;
-//	}
-
+	@GET
+	@Path("/list")
+	public Response listDoctors() {
+		List<Doctor> doctors = doctorService.listDoctors();
+		if(doctors.isEmpty()) {
+			return Response.status(404).entity("No hay doctores").build();
+		} else {
+			return Response.ok(doctors).build();			
+		}
+	}
 	
-
 	@POST
-	@Path("crear")
+	@Path("create")
 	@Transactional
     public Response createDoctor(DoctorDTO doctorDTO) {
       
@@ -65,28 +65,27 @@ public class DoctorResource {
     }
     }
 	
-//	@GET
-//	@Path("{nombre}")
-//	@Produces(MediaType.APPLICATION_JSON)
-//	public List<Doctor> getDoctorbyNombre(@PathParam("nombre") String nombre) {
-//		return repository.buscarPorNombre(nombre);
-//	}
-  
-//	public Response mostrarDoctor(Doctor nuevoDoctor) {
-//		return doctorService.crearDoctor(nuevoDoctor);
-//	}
+	/*
+	 * @GET
+	 * 
+	 * @Path("{nombre}")
+	 * 
+	 * @Produces(MediaType.APPLICATION_JSON) public List<Doctor>
+	 * getDoctorbyNombre(@PathParam("nombre") String nombre) { return
+	 * repository.buscarPorNombre(nombre); } public Response mostrarDoctor(Doctor
+	 * nuevoDoctor) { return doctorService.crearDoctor(nuevoDoctor); }
+	 */
 	
 	@GET
-	@Path("nombre/{nombre}")
-	public Response getByName(@PathParam("nombre") String nombre) {
-		return doctorService.getByName(nombre);
+	@Path("name/{name}")
+	public Response getByName(@PathParam("name") String name) {
+		return doctorService.getByName(name);
 	}
-
 	
 	@GET
-	@Path("especialidad/{especialidad}")
-	public Response getByEspecialidad(@PathParam("especialidad") Especialidad especialidad) {
-		return doctorService.getByEspecialidad(especialidad);
+	@Path("specialty/{specialty}")
+	public Response getByEspecialidad(@PathParam("specialty") Especialidad specialty) {
+		return doctorService.getByEspecialidad(specialty);
 	}
 	
 //	@DELETE
