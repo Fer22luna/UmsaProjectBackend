@@ -2,6 +2,7 @@ package org.umsaback.models.entities;
 
 import java.time.LocalDate;
 
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.hibernate.annotations.UuidGenerator;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -12,15 +13,16 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+//import lombok.AllArgsConstructor;
+//import lombok.Getter;
+//import lombok.NoArgsConstructor;
+//import lombok.Setter;
 
 //@Getter
 //@Setter
 //@AllArgsConstructor
 //@NoArgsConstructor
+@Schema(description = "Entity representation of Patient")
 @Entity
 @Table(name = "turnos")
 public class Turno {

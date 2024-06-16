@@ -1,5 +1,7 @@
 package org.umsaback.services;
 
+import java.util.List;
+
 import org.umsaback.models.dtos.TurnoDTO;
 import org.umsaback.models.entities.Doctor;
 import org.umsaback.models.entities.Paciente;
@@ -25,6 +27,16 @@ public class TurnoService {
 	DoctorRepository doctorRepository;
 	
 	
+	 public List<Turno> listAll(){
+			return turnoRepository.listAll();
+		}
+	 
+	 public Turno findById(String id){
+		 
+			return turnoRepository.findByUUID(id);
+		}	 
+	 
+	
 	 public Turno createTurno(TurnoDTO turnoDTO) {
 
 		 	Doctor doctorTurno = doctorRepository.findByUUID(turnoDTO.getDoctorId());
@@ -37,4 +49,28 @@ public class TurnoService {
 		
 	        return turnoRepository.findById(nuevoTurno.getId());
 	    }
+	 
+public Turno deleteTurnoById(String id) {
+		 
+		 Turno deletedTurno = turnoRepository.findByUUID(id);
+		 
+		 turnoRepository.delete(deletedTurno);
+		 
+		 return deletedTurno;
+	 }
+	 
+	 
+	 public Turno updateTurno(String id, TurnoDTO turnoDTO ) {
+		 
+		 Turno updatedTurno = turnoRepository.findByUUID(id);
+		 
+		 // Para el caso de un solo campo ?
+	     //pacienteRepository.getEntityManager().merge(pacienteDTO);
+		 
+		 updatedTurno.setDomicilioConsulta(turnoDTO.getDomicilioConsulta());
+		 updatedTurno.setFechaHoraTurno(turnoDTO.getFechaHoraTurno());
+		
+		 turnoRepository.persist(updatedTurno); 
+		 return updatedTurno;
+	 }
 }

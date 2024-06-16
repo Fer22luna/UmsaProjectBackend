@@ -2,18 +2,21 @@ package org.umsaback.models.dtos;
 
 import java.time.LocalDate;
 
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+//import lombok.AllArgsConstructor;
+//import lombok.Getter;
+//import lombok.NoArgsConstructor;
+//import lombok.Setter;
 
 //@Getter
 //@Setter
 //@AllArgsConstructor
 //@NoArgsConstructor
+@Schema(hidden=true)
 public class TurnoDTO {
 
 	@NotBlank(message="Fecha es requerido")

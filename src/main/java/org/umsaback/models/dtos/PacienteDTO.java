@@ -1,8 +1,9 @@
 package org.umsaback.models.dtos;
 import java.time.LocalDate;
-
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 
+@Schema(hidden=true)
 public class PacienteDTO {
 
 	

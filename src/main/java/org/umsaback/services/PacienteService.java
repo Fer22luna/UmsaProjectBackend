@@ -9,6 +9,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
 
+
 @ApplicationScoped
 public class PacienteService {
 
@@ -39,7 +40,36 @@ public class PacienteService {
 	        return pacienteRepository.findById(nuevoPaciente.getId());
 	    }
 	 
+	
+	 public Paciente deletePacienteByCuit(String cuit) {
+		 
+		 Paciente deletedPatient = pacienteRepository.findByCuit(cuit);
+		 
+		 pacienteRepository.delete(deletedPatient);
+		 
+		 return deletedPatient;
+	 }
 	 
+	 
+	 public Paciente updatePatient(String cuit, PacienteDTO pacienteDTO ) {
+		 
+		 Paciente updatedPatient = pacienteRepository.findByCuit(cuit);
+		 
+		 // Para el caso de un solo campo ?
+	     //pacienteRepository.getEntityManager().merge(pacienteDTO);
+		 
+		 updatedPatient.setNombre(pacienteDTO.getNombre());
+		 updatedPatient.setApellido(pacienteDTO.getApellido());
+		 updatedPatient.setDni(pacienteDTO.getDni());
+		 updatedPatient.setDomicilio(pacienteDTO.getDomicilio());
+		 updatedPatient.setFechaNacimiento(pacienteDTO.getFechaNacimiento());
+		 updatedPatient.setCelular(pacienteDTO.getCelular());
+		 updatedPatient.setObraSocial(pacienteDTO.getObraSocial());
+		
+		 pacienteRepository.persist(updatedPatient);
+		 
+		 return updatedPatient;
+	 }
 	 
 		
 }
