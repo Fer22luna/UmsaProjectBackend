@@ -7,6 +7,7 @@ import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
+import org.umsaback.exceptions.TurnoNotFoundException;
 import org.umsaback.models.dtos.TurnoDTO;
 import org.umsaback.models.entities.Turno;
 import org.umsaback.services.TurnoService;
@@ -70,8 +71,19 @@ public class TurnoResource {
 			@Parameter(description="Appointment Id", required=true) 
 			@PathParam("id") String id ) {
 		
+		try {
+			
 		Turno turno = turnoService.findById(id);
 		return Response.status(Response.Status.OK).entity(turno).build();
+		
+		} catch (TurnoNotFoundException e) {
+			
+			return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
+
+		} catch (Exception e) {
+			
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+		}
 		
 	}
 	
@@ -111,10 +123,23 @@ public class TurnoResource {
 			@Parameter(description="Appointment Id", required=true) 
 			@PathParam("id") String id, TurnoDTO turnoDTO) {
 		
-		Turno updatedTurno = turnoService.updateTurno(id, turnoDTO);	
+		try {
+		Turno updatedTurno = turnoService.updateTurno(id, turnoDTO);
 		return Response.status(Response.Status.OK).entity(updatedTurno).build();	
+		
+		} catch (TurnoNotFoundException e) {
+			
+			return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
+
+		} catch (Exception e) {
+			
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+		}
+		
 	}
 
+	
+	
 	@DELETE
 	@Path("{id}")
 	@Operation(operationId = "deleteTurnos",
@@ -132,7 +157,18 @@ public class TurnoResource {
 			@Parameter(description="Appointment Id", required=true) 
 			@PathParam("id") String id) {
 		
-		Turno deletedTurno = turnoService.deleteTurnoById(id);
-		return Response.status(Response.Status.OK).entity(deletedTurno).build();
+		try {
+	      Turno deletedTurno = turnoService.deleteTurnoById(id);
+		  return Response.status(Response.Status.OK).entity(deletedTurno).build();
+		
+		} catch (TurnoNotFoundException e) {
+			
+			return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
+
+		} catch (Exception e) {
+			
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+		}
+		
 	}
 }

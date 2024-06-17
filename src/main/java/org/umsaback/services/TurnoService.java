@@ -2,6 +2,7 @@ package org.umsaback.services;
 
 import java.util.List;
 
+import org.umsaback.exceptions.TurnoNotFoundException;
 import org.umsaback.models.dtos.TurnoDTO;
 import org.umsaback.models.entities.Doctor;
 import org.umsaback.models.entities.Paciente;
@@ -31,9 +32,15 @@ public class TurnoService {
 			return turnoRepository.listAll();
 		}
 	 
-	 public Turno findById(String id){
+	 public Turno findById(String id) throws TurnoNotFoundException{
 		 
-			return turnoRepository.findByUUID(id);
+		 	Turno turno = turnoRepository.findByUUID(id);
+		 	
+		 	if(turno == null) {
+		 		
+		 		throw new TurnoNotFoundException("Turno with id " + id + "not found ");
+		 	}
+			return turno;
 		}	 
 	 
 	
@@ -50,9 +57,15 @@ public class TurnoService {
 	        return turnoRepository.findById(nuevoTurno.getId());
 	    }
 	 
-public Turno deleteTurnoById(String id) {
+     public Turno deleteTurnoById(String id)  throws TurnoNotFoundException {
 		 
 		 Turno deletedTurno = turnoRepository.findByUUID(id);
+		 
+		 	if(deletedTurno == null) {
+		 		
+		 		throw new TurnoNotFoundException("Turno with id " + id + "not found ");
+		 	
+		 	}
 		 
 		 turnoRepository.delete(deletedTurno);
 		 
@@ -60,9 +73,15 @@ public Turno deleteTurnoById(String id) {
 	 }
 	 
 	 
-	 public Turno updateTurno(String id, TurnoDTO turnoDTO ) {
+	 public Turno updateTurno(String id, TurnoDTO turnoDTO ) throws TurnoNotFoundException {
 		 
 		 Turno updatedTurno = turnoRepository.findByUUID(id);
+		 
+		 	if(updatedTurno == null) {
+		 		
+		 		throw new TurnoNotFoundException("Turno with id " + id + "not found ");
+		 	
+		 	}
 		 
 		 // Para el caso de un solo campo ?
 	     //pacienteRepository.getEntityManager().merge(pacienteDTO);

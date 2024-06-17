@@ -8,21 +8,16 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
-
 import java.util.List;
-
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
-
-//import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
-
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
+import org.umsaback.exceptions.PatientNotFoundException;
 import org.umsaback.models.dtos.PacienteDTO;
 import org.umsaback.models.entities.Paciente;
 import org.umsaback.services.PacienteService;
-
 import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -82,8 +77,19 @@ public class PacienteResource {
 			@Parameter(description="Patient's cuit", required=true) 
 			@PathParam("cuit") String cuit ) {
 		
-		Paciente paciente = pacienteService.findByCuit(cuit);
-		return Response.status(Response.Status.OK).entity(paciente).build();
+		try {
+	     Paciente  paciente = pacienteService.findByCuit(cuit);
+			
+			return  Response.status(Response.Status.OK).entity(paciente).build();
+			
+		} catch (PatientNotFoundException e) {
+			
+			return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
+
+		} catch (Exception e) {
+			
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+		}
 		
 	}
 	
@@ -124,8 +130,20 @@ public class PacienteResource {
 			@Parameter(description= "Patient cuit",required=true)
 			@PathParam("cuit") String cuit, PacienteDTO pacienteDTO) {
 		
-		Paciente updatedPaciente = pacienteService.updatePatient(cuit, pacienteDTO);		
-		return Response.status(Response.Status.OK).entity(updatedPaciente).build();
+		
+		try {
+			
+		Paciente updatedPaciente = pacienteService.updatePatient(cuit, pacienteDTO);
+			return Response.status(Response.Status.OK).entity(updatedPaciente).build();
+			
+		} catch (PatientNotFoundException e) {
+			
+			return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
+
+		} catch (Exception e) {
+			
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+		}	
 		
 	}
 
@@ -145,9 +163,18 @@ public class PacienteResource {
 	public Response deletePaciente (
 			@Parameter(description="cuit", required=true) 
 			@PathParam("cuit") String cuit) {
-		
+	
+		try {
 		Paciente deletedPaciente = pacienteService.deletePacienteByCuit(cuit);
 		return Response.status(Response.Status.OK).entity(deletedPaciente).build();
+		} catch (PatientNotFoundException e) {
+			
+			return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
+
+		} catch (Exception e) {
+			
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+		}
 	}
 
 }
