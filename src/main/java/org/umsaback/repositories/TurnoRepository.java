@@ -16,5 +16,8 @@ public class TurnoRepository implements PanacheRepositoryBase<Turno, String>{
 		return findAll().list();
 	}
 	
+	public Turno findByUUID(String id){
+		return find("id",id).firstResult();
+	}
 	
 }
